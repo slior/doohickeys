@@ -3,6 +3,7 @@ package ls.doohickeys;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
 import static java.util.stream.IntStream.rangeClosed;
@@ -75,4 +76,18 @@ public final class Util
             throw new IllegalArgumentException(m);
         return s;
     }
+
+    public static boolean isEmpty(final String s) { return s == null || "".equals(s); }
+
+    /**
+     * Convenience method for creating a supplier of runtime exception with the given message.
+     * Useful, for example, when combined with {@link java.util.Optional#orElseThrow(java.util.function.Supplier)}.
+     * @param msg The message to set in the exception. If null, the message will be 'null'
+     * @return A supplier returning a runtime exception with the given message
+     */
+    public static Supplier<? extends RuntimeException> ex(final String msg)
+    {
+        return () -> new RuntimeException(String.valueOf(msg));
+    }
+
 }
